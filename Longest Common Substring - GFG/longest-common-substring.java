@@ -34,7 +34,6 @@ class Solution{
         int dp[][] = new int[S1.length() + 1][S2.length() + 1];
         int max = Integer.MIN_VALUE;
         
-        dp[0][0] = 0;
         for(int i = 1; i <= S1.length(); i++) {
             for(int j = 1; j <= S2.length(); j++) {
                 if(S1.charAt(i - 1) == S2.charAt(j - 1)) {
