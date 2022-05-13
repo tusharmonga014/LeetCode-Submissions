@@ -23,16 +23,11 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
-        helper(root, null);
-        return root;
-    }
-    
-    public void helper(Node root, Node next) {
         if(root == null) {
-            return;
+            return null;
         }
-        
-        root.next = next;
+                
+        Node next = root.next;
         
         Node nextForRightChild = null;
         while(next != null) {
@@ -46,9 +41,16 @@ class Solution {
                 next = next.next;
             }
         }
-        helper(root.right, nextForRightChild);
+        if(root.right != null) {
+            root.right.next = nextForRightChild;
+            connect(root.right);
+        }
         
         Node nextForLeftChild = root.right != null ? root.right : nextForRightChild;
-        helper(root.left, nextForLeftChild);
+        if(root.left != null) {
+            root.left.next = nextForLeftChild;
+            connect(root.left);
+        }
+        return root;
     }
 }
