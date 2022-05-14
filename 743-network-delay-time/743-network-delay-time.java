@@ -45,27 +45,41 @@ class Solution {
             return this.wsf - o.wsf; 
         }
     }
-
-    public int networkDelayTime(int[][] times, int n, int k) {
-        PriorityQueue<Pair> pq = new PriorityQueue<>();
-        constructGraph(times, n);
+    
+    private int getMinTime_toTraverseAllNodes(int n, int k) {
         int ans = 0;
+        
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
         pq.offer(new Pair(k, 0));
-        int tvn = 0;
+        
+        int tvn = 0; // total visited nodes
         boolean vis[] = new boolean[n + 1];
+        
         while(tvn < n && !pq.isEmpty()) {
             Pair rem = pq.poll();
+        
             if(!vis[rem.u]) {
+                
                 vis[rem.u] = true;
                 tvn++;
                 ans = rem.wsf;
+            
                 for(Edge e : this.gp.get(rem.u)) {
                     pq.offer(new Pair(e.v, e.w + rem.wsf));
                 }
+                
             }
+            
         }
+        
         if(tvn < n)
             return -1;
+        
         return ans;
+    }
+
+    public int networkDelayTime(int[][] times, int n, int k) {
+        constructGraph(times, n);
+        return getMinTime_toTraverseAllNodes(n, k);
     }
 }
