@@ -1,16 +1,11 @@
 class Solution {
     public int shortestPathBinaryMatrix(int[][] grid) {
+        
         if(grid[0][0] != 0 || grid[grid.length - 1][grid[0].length - 1] != 0) {
             return -1;
         }
         
-        // int ans = dfs(grid, 0, 0, new boolean[grid.length][grid[0].length]);
-        // if(ans == Integer.MAX_VALUE) {
-        //     return -1;
-        // }
-        
         int ans = bfs(grid);
-        
         return ans;
     }
     
@@ -62,24 +57,5 @@ class Solution {
         } else {
             return -1;
         }
-    }
-    
-    private int dfs(int[][] grid, int i, int j, boolean[][] vis) {
-        if(i == grid.length - 1 && j == grid[0].length - 1) {
-            return 1;
-        }
-                
-        int min = Integer.MAX_VALUE;
-        for(int d = 0; d < dir.length; d++) {
-            int x = dir[d][0] + i;
-            int y = dir[d][1] + j;
-            if(x >= 0 && y >= 0 && x < grid.length && y < grid[0].length && !vis[x][y] && grid[x][y] == 0) {
-                vis[x][y] = true;
-                min = Math.min(min, dfs(grid, x, y, vis));
-                vis[x][y] = false;
-            }
-        }
-        
-        return min == Integer.MAX_VALUE ? min : min + 1;
     }
 }
