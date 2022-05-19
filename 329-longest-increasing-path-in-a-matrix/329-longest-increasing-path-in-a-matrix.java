@@ -1,33 +1,26 @@
 class Solution {
+    int[][] matrix, helper;
+    int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
     public int longestIncreasingPath(int[][] matrix) {
-        int max = 0;
-        int dp[][] = new int[matrix.length][matrix[0].length];
-        for(int i = 0; i < matrix.length; i++) {
-            for(int j = 0; j < matrix[0].length; j++) {
-                boolean vis[][] = new boolean[matrix.length][matrix[0].length];
-                vis[i][j] = true;
-                int cur = helper(matrix, i, j, vis, dp);
-                max = Math.max(max, cur);
-            }
+        helper = new int[matrix.length][matrix[0].length];
+        this.matrix= matrix;
+        int path = 0;
+        for(int i=0;i<matrix.length;i++) {
+            for(int j=0;j<matrix[0].length;j++) 
+                path = Math.max(path, dfs(i, j));
         }
-        return max;
+        
+        return path;
     }
-    private int dir[][] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-    private int helper(int[][] matrix, int i, int j, boolean[][] vis,int[][] dp) {
-        int max = 0;
-        if(dp[i][j] != 0) {
-            return dp[i][j];
-        }
-        for(int d = 0; d < dir.length; d++) {
-            int x = i + dir[d][0];
-            int y = j + dir[d][1];
-            if(x >= 0 && y >= 0 && x < matrix.length && y < matrix[0].length && !vis[x][y] && matrix[x][y] > matrix[i][j]) {
-                vis[x][y] = true;
-                int cur = helper(matrix, x, y, vis, dp);
-                max = Math.max(max, cur);
-                vis[x][y] = false;
+     
+    private int dfs(int x, int y) {
+        if (helper[x][y] != 0) return helper[x][y];
+        for(int d=0;d<dirs.length;d++) {
+            int i = dirs[d][0] + x, j = dirs[d][1] + y;
+            if(i >= 0 && i < matrix.length && j >= 0 && j < matrix[0].length && matrix[x][y] < matrix[i][j]) {
+                helper[x][y] = Math.max(helper[x][y], dfs(i, j));
             }
         }
-        return dp[i][j] = max + 1;
+        return ++helper[x][y];
     }
 }
