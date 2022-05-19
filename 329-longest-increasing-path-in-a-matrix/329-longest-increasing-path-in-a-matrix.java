@@ -13,7 +13,9 @@ class Solution {
         }
         return max;
     }
+    
     private int dir[][] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    
     private int dfs(int i, int j) {
         int max = 0;
         if(dp[i][j] != 0) {
