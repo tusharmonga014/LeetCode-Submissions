@@ -3,11 +3,9 @@ class Solution {
         HashMap<Integer, Integer> map = new HashMap<>();
         int st = 0;
         int psum[] = new int[nums.length];
-        for(int i = 0; i < psum.length; i++) {
-            psum[i] += nums[i] + (i > 0 ? psum[i - 1] : 0);
-        }
         int max = 0;
         for(int i = 0; i < nums.length; i++) {
+            psum[i] += nums[i] + (i > 0 ? psum[i - 1] : 0);
             if(map.containsKey(nums[i]) && map.get(nums[i]) >= st) {
                 int est = map.get(nums[i]);
                 st = est + 1;
