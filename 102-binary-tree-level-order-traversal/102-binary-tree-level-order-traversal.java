@@ -17,19 +17,23 @@ class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         LinkedList<TreeNode> que = new LinkedList<>();
         List<List<Integer>> ans = new ArrayList<>();
-        if(root == null) {
-            return ans;
-        }
+        
+        if(root == null) return ans;
+        
         que.add(root);
+        
         while(que.size() != 0) {
+            
             int size = que.size();
             List<Integer> smallAns = new ArrayList<>();
+            
             while(size-- > 0) {
                 TreeNode rem = que.removeFirst();
                 smallAns.add(rem.val);
                 if(rem.left != null) que.addLast(rem.left);
                 if(rem.right != null) que.addLast(rem.right);
             }
+            
             ans.add(smallAns);
         }
         return ans;
