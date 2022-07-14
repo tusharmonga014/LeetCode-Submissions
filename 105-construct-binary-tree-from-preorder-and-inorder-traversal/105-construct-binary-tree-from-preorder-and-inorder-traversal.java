@@ -14,21 +14,18 @@
  * }
  */
 class Solution {
-    private int findIdx(int ele, int[] inorder) {
-        for(int i = 0; i < inorder.length; i++) {
-            if(inorder[i] == ele)
-                return i;
-        }
-        return -1;
-    }
     public TreeNode buildTree(int[] preorder, int[] inorder) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
         TreeNode root = new TreeNode(preorder[0]);
-        int inRootIdx = findIdx(preorder[0], inorder);
-        root.left = buildTree_(1, inRootIdx, 0, inRootIdx - 1, preorder, inorder);
-        root.right = buildTree_(1 + inRootIdx, preorder.length - 1, inRootIdx + 1, inorder.length - 1, preorder, inorder);
+        int inRootIdx = map.get(preorder[0]);
+        root.left = buildTree_(1, inRootIdx, 0, inRootIdx - 1, preorder, inorder, map);
+        root.right = buildTree_(1 + inRootIdx, preorder.length - 1, inRootIdx + 1, inorder.length - 1, preorder, inorder, map);
         return root;
     }
-    private TreeNode buildTree_(int ps, int pe, int is, int ie, int[] preorder, int[] inorder) {
+    private TreeNode buildTree_(int ps, int pe, int is, int ie, int[] preorder, int[] inorder, HashMap<Integer, Integer> map) {
         if(ps > pe || is > ie) {
             return null;
         }
@@ -36,10 +33,10 @@ class Solution {
             return new TreeNode(inorder[is]);
         }
         TreeNode root = new TreeNode(preorder[ps]);
-        int inRootIdx = findIdx(preorder[ps], inorder);
+        int inRootIdx = map.get(preorder[ps]);
         int numsLeft = inRootIdx - is;
-        root.left = buildTree_(ps + 1, ps + numsLeft, is, inRootIdx - 1, preorder, inorder);
-        root.right = buildTree_(ps + numsLeft + 1, pe, inRootIdx + 1, ie, preorder, inorder);
+        root.left = buildTree_(ps + 1, ps + numsLeft, is, inRootIdx - 1, preorder, inorder, map);
+        root.right = buildTree_(ps + numsLeft + 1, pe, inRootIdx + 1, ie, preorder, inorder, map);
         return root;
     }
 }
