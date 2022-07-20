@@ -26,6 +26,7 @@ class Solution {
             
             if(j==temp.length){
                 ans+=map.get(str);
+                // ans++;
             }
             
         }
