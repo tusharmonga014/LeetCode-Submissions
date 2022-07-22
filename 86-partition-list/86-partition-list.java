@@ -35,6 +35,7 @@ class Solution {
             }
             temp = temp.next;
         }
+        
         if(lh != null) tl.next = null;
         if(sh != null) ts.next = lh;
         
