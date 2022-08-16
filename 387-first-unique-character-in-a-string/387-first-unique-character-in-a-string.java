@@ -10,12 +10,12 @@ class Solution {
                 ch[s.charAt(i) - 'a'] = Integer.MAX_VALUE;
             }
         }
+        int min = Integer.MAX_VALUE;
         for(int i = 0; i < 26; i++) {
-            if(ch[i] == null) {
-                ch[i] = Integer.MAX_VALUE;
+            if(ch[i] != null) {
+                min = Math.min(min, ch[i]);
             }
         }
-        Arrays.sort(ch);
-        return (ch[0] == Integer.MAX_VALUE) ?  -1 : ch[0];
+        return (min == Integer.MAX_VALUE) ?  -1 : min;
     }
 }
