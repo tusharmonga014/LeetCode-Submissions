@@ -1,16 +1,16 @@
 class Solution {
     public int minSetSize(int[] arr) {
-        int map[] = new int[100001];
+        Integer map[] = new Integer[100001];
+        Arrays.fill(map, 0);
         for(int ele : arr) {
             map[ele]++;
         }
-        // System.out.println(Arrays.toString(map));
-        Arrays.sort(map);
+        Arrays.sort(map, Collections.reverseOrder());
         int set = 0;
         int count = 0;
         int sz_2 = arr.length / 2;
-        for(int i = map.length - 1; i >= 0; i--) {
-            set += map[i];
+        for(int ele : map) {
+            set += ele;
             count++;
             if(set >= sz_2) {
                 break;
