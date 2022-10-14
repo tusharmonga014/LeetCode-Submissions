@@ -9,20 +9,11 @@
  * }
  */
 class Solution {
-    public boolean isPalindrome(ListNode head) {
-        ListNode t1 = head;
-        ListNode slow = head;
-        ListNode fast = head;
-        while(fast != null && fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        ListNode mid = slow;
-        ListNode t2 = mid.next;
-        mid.next = null;
+    
+    public ListNode reverse(ListNode head) {
         
         ListNode prev = null;
-        ListNode cur = t2;
+        ListNode cur = head;
         ListNode forw = null;
         
         while(cur != null) {
@@ -32,35 +23,33 @@ class Solution {
             cur = forw;
         }
         
-        t2 = prev;
-        ListNode c1 = t1, c2 = t2;
-        
+        return prev;
+    }
+    
+    public ListNode getMid(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+    
+    public boolean isPalindrome(ListNode head) {
+        ListNode mid = getMid(head);
+        ListNode head2 = reverse(mid);
+        ListNode t1 = head;
+        ListNode t2 = head2;
         boolean isPal = true;
-        
-        while(c2 != null) {
-            if(c1.val != c2.val) {
+        while(t2 != null) {
+            if(t1.val != t2.val) {
                 isPal = false;
                 break;
             }
-            c1 = c1.next;
-            c2 = c2.next;
+            t1 = t1.next;
+            t2 = t2.next;
         }
-        
-        cur = t2;
-        prev = null;
-        forw = null;
-        
-        while(cur != null) {
-            forw = cur.next;
-            cur.next = prev;
-            prev = cur;
-            cur = forw;
-        }
-        
-        t2 = prev;
-        
-        mid.next = t2;
-        
+        reverse(head2);
         return isPal;
     }
 }
