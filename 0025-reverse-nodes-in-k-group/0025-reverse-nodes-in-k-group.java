@@ -38,7 +38,7 @@ class Solution {
         while(len >= k) {
             ListNode tt = cur;
             ListNode forw = null;
-            ListNode prev = t;
+            ListNode prev = null;
             
             int tempk = k;
             
