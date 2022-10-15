@@ -53,9 +53,9 @@ class Solution {
             
             if(h == null) {
                 h = prev;
-                t = tt;
+            } else {
+                t.next = prev;
             }
-            t.next = prev;
             t = tt;
         }
         t.next = cur;
