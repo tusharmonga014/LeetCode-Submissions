@@ -12,8 +12,8 @@ class Solution {
     
     public int length(ListNode head) {
         ListNode cur = head;
-        int count = 1;
-        while(cur.next != null) {
+        int count = 0;
+        while(cur != null) {
             cur = cur.next;
             count++;
         }
@@ -45,7 +45,7 @@ class Solution {
             while(tempk-- > 0) {
                 forw = cur.next;
                 cur.next = prev;
-                prev = cur;
+                prev = cur;  
                 cur = forw;
             }
             
