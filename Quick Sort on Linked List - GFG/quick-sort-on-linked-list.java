@@ -114,28 +114,45 @@ class GfG
         
         return new Node[]{sLL.next, pivot, gLL.next};
     }
-    public static Node quickSort(Node node)
-    {
-        if(node == null || node.next == null)
-            return node;
+    
+    public static Node[] joinLists(Node[] left, Node pivot, Node[] right) {
+        Node head, tail;
+        
+        if(left[0] == null && right[0] == null) {
+            head = pivot;
+            tail = pivot;
+        } else if(left[0] == null) {
+            head = pivot;
+            head.next = right[0];
+            tail = right[1];
+        } else if(right[0] == null) {
+            head = left[0];
+            left[1].next = pivot;
+            tail = pivot;
+        } else {
+            head = left[0];
+            left[1].next = pivot;
+            pivot.next = right[0];
+            tail = right[1];
+        }
+        
+        return new Node[]{head, tail};
+    }
+    
+    public static Node[] quickSort_(Node node) {
+        if(node == null)
+            return new Node[2];
             
         Node nodes[] = segregate(node);
-        nodes[0] = quickSort(nodes[0]);
-        nodes[2] = quickSort(nodes[2]);
+        Node[] left = quickSort_(nodes[0]);
+        Node[] right = quickSort_(nodes[2]);
         
-        Node tail1 = nodes[0];
-        while(tail1 != null && tail1.next != null) {
-            tail1 = tail1.next;
-        }
-        
-        nodes[1].next = nodes[2];
-        
-        if(tail1 != null) {
-            tail1.next = nodes[1];
-            return nodes[0];
-        } else {
-            return nodes[1];
-        }
+        return joinLists(left, nodes[1], right);
+    }
+    
+    public static Node quickSort(Node node)
+    {
+        return quickSort_(node)[0];
     }
     
     
