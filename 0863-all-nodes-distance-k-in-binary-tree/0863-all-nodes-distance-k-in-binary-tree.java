@@ -8,61 +8,46 @@
  * }
  */
 class Solution {
-    public ArrayList<TreeNode> ntrp(TreeNode root, TreeNode node) {
-        if(root == null) return new ArrayList<>();
-        if(root == node) {
-            ArrayList<TreeNode> base = new ArrayList<>();
-            base.add(root);
-            return base;
-        }
-        
-        ArrayList<TreeNode> lp = ntrp(root.left, node);
-        if(lp.size() > 0) {
-            lp.add(root);
-            return lp;
-        }
-        
-        ArrayList<TreeNode> rp = ntrp(root.right, node);
-        if(rp.size() > 0) {
-            rp.add(root);
-            return rp;
-        }
-        return new ArrayList<>();
-    }
+    List<Integer> ans;
     
-    public ArrayList<Integer> kDown(TreeNode root, int k, TreeNode pnode) {
+    public void kDown(TreeNode root, int k, TreeNode pnode) {
         if(root == null || root == pnode) {
-            return new ArrayList<>();
+            return;
         }
         
         if(k == 0) {
-            ArrayList<Integer> base = new ArrayList<>();
-            base.add(root.val);
-            return base;
+            ans.add(root.val);
         }
         
-        ArrayList<Integer> lkd = kDown(root.left, k - 1, pnode);
-        ArrayList<Integer> rkd = kDown(root.right, k - 1, pnode);
-        
-        ArrayList<Integer> myAns = new ArrayList<>();
-        myAns.addAll(lkd);
-        myAns.addAll(rkd);
-        return myAns;
+        kDown(root.left, k - 1, pnode);
+        kDown(root.right, k - 1, pnode);
+    }
+    
+    public int kAway2(TreeNode root, TreeNode node, int k) {
+        if(root == null) {
+            return -1;
+        }
+        if(root == node) {
+            kDown(root, k, null);
+            return 1;
+        } else {
+            int lkd = kAway2(root.left, node, k);
+            if(lkd > -1) {
+                kDown(root, k - lkd, root.left);
+                return lkd + 1;
+            }
+            int rkd = kAway2(root.right, node, k);
+            if(rkd > -1) {
+                kDown(root, k - rkd, root.right);
+                return rkd + 1;
+            }
+        }
+        return -1;
     }
     
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        ArrayList<TreeNode> path = ntrp(root, target);
-        
-        List<Integer> ans = new ArrayList<>();
-        
-        int i = 0;
-        while(k >= 0 && i < path.size()) {
-            ans.addAll(kDown(path.get(i), k, i == 0 ? null : path.get(i - 1)));
-            System.out.println(ans);
-            i++;
-            k--;                       
-        }
-        
+        ans = new ArrayList<>();
+        kAway2(root, target, k);
         return ans;
     }
 }
