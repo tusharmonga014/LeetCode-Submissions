@@ -67,8 +67,6 @@ class Solution {
                 if(map.containsKey(c) && map.get(c) <= 0) map.remove(c);
                 
                 if(map.size() == k) {
-                    int len = i - j;
-                    ans = Math.max(ans, len);
                     break;
                 }
             }
