@@ -32,7 +32,6 @@ class RandomizedCollection {
         al.remove(al.size() - 1);
         if(map.get(val).isEmpty()) {
             map.remove(val);
-            System.out.println("yes");
         }
         return true;
     }
