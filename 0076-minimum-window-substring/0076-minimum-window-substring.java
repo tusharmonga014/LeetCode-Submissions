@@ -7,7 +7,7 @@ class Solution {
             omap.put(c, omap.getOrDefault(c, 0) + 1);
             
         }
-        
+         
         int ans = 0;
         int ansi = -1;
         int ansj = -1;
@@ -50,7 +50,7 @@ class Solution {
                     ansi = i;
                     ansj = j;
                 }
-                
+                         
                 j++;
                 
                 char c = s.charAt(j);
