@@ -23,7 +23,7 @@ class MinStack {
     public void pop() {
         if(st.size() == 0) return;
         else {
-            if(st.peek() > min) {
+            if(st.peek() >= min) {
                 st.pop();
             } else {
                 min = (2 * min) - st.peek();
